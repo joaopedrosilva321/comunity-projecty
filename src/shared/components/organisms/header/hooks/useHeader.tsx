@@ -1,9 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 
-import type { UserProps } from "@/shared/@types/UserProps"
+import cookies from "js-cookie"
+import { useRouter } from "nextjs-toploader/app"
+
+import { useDataStore, type TUserData } from "@/shared/store/userDataStore"
 
 const defaultNav = [
 	{ name: "Home", path: "/" },
@@ -19,21 +21,23 @@ const navGuest = [
 
 export function useHeader() {
 	const [open, setOpen] = useState(false)
-	const [userData, setUserData] = useState<UserProps | null>(null)
+	const { setUserData, userData } = useDataStore()
 
 	const router = useRouter()
 
 	useEffect(() => {
-		// Certifique-se de que o código é executado no lado do cliente
-		if (typeof window !== "undefined") {
-			const storage = localStorage.getItem("userData")
-			const parsedData = storage ? (JSON.parse(storage) as UserProps | null) : null
-			setUserData(parsedData)
+		const userCookie = cookies.get("user") as string | undefined
+
+		if (userCookie) {
+			const user = JSON.parse(userCookie) as TUserData
+			setUserData(user)
 		}
 	}, [])
 
 	function handleLogOut() {
-		localStorage.removeItem("userData")
+		cookies.remove("user")
+		cookies.remove("refreshToken")
+		cookies.remove("token")
 		setUserData(null)
 		router.refresh()
 	}
@@ -44,7 +48,7 @@ export function useHeader() {
 
 	const navDesktop = defaultNav
 
-	const navMobile = userData?.id ? defaultNav : [...defaultNav, ...navGuest]
+	const navMobile = userData ? defaultNav : [...defaultNav, ...navGuest]
 
 	return {
 		open,

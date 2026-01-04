@@ -5,30 +5,7 @@ import Link from "next/link"
 import Logo from "../../../../public/favicon.svg"
 import Discord from "../../../../public/icon/discord.svg"
 import Twitch from "../../../../public/icon/twitch.svg"
-import { MultiAvatar } from "../molecules/avatars/MultiAvatar"
-
-const listAvatar = [
-	{
-		src: "https://i.pinimg.com/236x/54/90/5d/54905db6a983fa17c7e0fa80c7db478a.jpg",
-		name: "Sam"
-	},
-	{
-		src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzHvHZ7u51v98c_fqdBe626-I9JJfMx5S4BKTaOHDAOpxTFnkB4nFjN2on7cv-_rVUysc&usqp=CAU",
-		name: "Clover"
-	},
-	{
-		src: "https://pbs.twimg.com/media/E2O8sHlVgAEmE2U.png:small",
-		name: "Alex"
-	},
-	{
-		src: "https://i.ytimg.com/vi/tqsteJIc6Ds/maxresdefault.jpg",
-		name: "Phineas"
-	},
-	{
-		src: "https://pm1.aminoapps.com/7023/bc7bda9e84fd98da0ebc2cfb07afb9b2cefeab3fr1-1896-1066v2_hq.jpg",
-		name: "Ferb"
-	}
-]
+import { FooterContributors } from "./Footer/components/FooterContributors"
 
 export function Footer() {
 	return (
@@ -64,10 +41,8 @@ export function Footer() {
 				</div>
 
 				<div className="space-y-2">
-					<p className="text-xs font-bold text-white lg:text-base">
-						Nossos desenvolvedores
-					</p>
-					<MultiAvatar className="w-full justify-end" listAvatar={listAvatar} size="xs" />
+					<p className="text-xs font-bold text-white lg:text-base">Colaboradores</p>
+					<FooterContributors />
 				</div>
 			</div>
 		</footer>

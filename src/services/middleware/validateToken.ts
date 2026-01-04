@@ -13,7 +13,6 @@ import { payloadSchema } from "../validators/oAuth"
 export async function validateToken(token: string) {
 	try {
 		const decodedToken = JWT.verify(token, JWT_SECRETE)
-		console.log("decodedToken", decodedToken)
 
 		if (!payloadSchema.safeParse(decodedToken).success) {
 			throw new UnauthorizedError("Token inválido")
