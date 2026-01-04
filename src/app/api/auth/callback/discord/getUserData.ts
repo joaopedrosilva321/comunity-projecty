@@ -1,5 +1,3 @@
-import { api } from "@/shared/libs/axios"
-
 type Response = {
 	id: string
 	username: string
@@ -30,5 +28,5 @@ export default async function getUserData(token: string) {
 		return null
 	}
 
-	return await response.json()
+	return (await response.json()) as Response
 }

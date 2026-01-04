@@ -13,12 +13,14 @@ export default function useModel() {
 	const [isConnectingDiscord, setIsConnectingDiscord] = useState(false)
 	const [isConnectingGithub, setIsConnectingGithub] = useState(false)
 
-	const connectProvider = (action: "login" | "register", provider: "discord" | "github") => {		
+	const connectProvider = (
+		action: "login" | "register",
+		provider: "discord" | "github"
+	) => {
 		globalThis.location.href = `/api/auth/${provider}?action=${action}&provider=${provider}`
 
 		provider === "discord" ? setIsConnectingDiscord(true) : setIsConnectingGithub(true)
-		
-	}	
+	}
 
 	const { mutate: authDiscord, isPending: isAuthDiscord } = useMutation({
 		mutationFn: getAuth,
@@ -26,7 +28,7 @@ export default function useModel() {
 		onError: () => {}
 	})
 
-		const { mutate: authGithub, isPending: isAuthGithub } = useMutation({
+	const { mutate: authGithub, isPending: isAuthGithub } = useMutation({
 		mutationFn: getAuth,
 		onSuccess: () => {},
 		onError: () => {}
@@ -43,7 +45,6 @@ export default function useModel() {
 	}, [searchParams])
 
 	const loadDiscord = isConnectingDiscord || isAuthDiscord
-
 	const loadGithub = isConnectingGithub || isAuthGithub
 
 	return { connectProvider, loadDiscord, loadGithub }
